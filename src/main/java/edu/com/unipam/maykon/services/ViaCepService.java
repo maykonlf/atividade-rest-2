@@ -1,4 +1,4 @@
-package edu.com.unipam.maykon.rest;
+package edu.com.unipam.maykon.services;
 
 import edu.com.unipam.maykon.entidades.CEP;
 import retrofit2.Call;
