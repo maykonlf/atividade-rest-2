@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CNPJ {
     @SerializedName("atividade_principal")
-    private Atividade atividadePrincipal;
+    private List<Atividade> atividadePrincipal;
     @SerializedName("data_situacao")
     private String dataSituacao;
     private String nome;
@@ -45,11 +45,11 @@ public class CNPJ {
     private String capitalSocial;
     private Object extra;
 
-    public Atividade getAtividadePrincipal() {
+    public List<Atividade> getAtividadePrincipal() {
         return atividadePrincipal;
     }
 
-    public void setAtividadePrincipal(Atividade atividadePrincipal) {
+    public void setAtividadePrincipal(List<Atividade> atividadePrincipal) {
         this.atividadePrincipal = atividadePrincipal;
     }
 
