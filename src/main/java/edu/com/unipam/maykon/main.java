@@ -1,25 +1,22 @@
 package edu.com.unipam.maykon;
 
-import com.google.gson.Gson;
 import edu.com.unipam.maykon.entidades.CEP;
 import edu.com.unipam.maykon.entidades.CNPJ;
+import edu.com.unipam.maykon.services.EnumServices;
 import edu.com.unipam.maykon.services.ReceitaWSService;
+import edu.com.unipam.maykon.services.ServiceFactory;
 import edu.com.unipam.maykon.services.ViaCepService;
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 
 public class main {
     public static void main(String[] args) {
-        Retrofit retrofitViaCEP = new Retrofit.Builder()
-                .baseUrl("https://viacep.com.br/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofitViaCEP = ServiceFactory.CreateService(EnumServices.VIA_CEP);
 
         ViaCepService viaCepService = retrofitViaCEP.create(ViaCepService.class);
-        Call<CEP> cepCall = viaCepService.getCEPInfo("38700001");
+        Call<CEP> cepCall = viaCepService.getInfo("38700001");
         try {
             CEP cepInfo = cepCall.execute().body();
             System.out.println("cep:" + cepInfo.getCep());
@@ -31,14 +28,10 @@ public class main {
             e.printStackTrace();
         }
 
-        Retrofit retrofitReceitaWS = new Retrofit.Builder()
-                .baseUrl("https://www.receitaws.com.br")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+        Retrofit retrofitReceitaWS = ServiceFactory.CreateService(EnumServices.RECEITA_WS);
 
         ReceitaWSService receitaWSService = retrofitReceitaWS.create(ReceitaWSService.class);
-        Call<CNPJ> cnpjCall = receitaWSService.getCNPJInfo("23086962000100");
+        Call<CNPJ> cnpjCall = receitaWSService.getInfo("23086962000100");
 
         try {
             CNPJ cnpj = cnpjCall.execute().body();

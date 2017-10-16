@@ -7,5 +7,5 @@ import retrofit2.http.Path;
 
 public interface ReceitaWSService {
     @GET("v1/cnpj/{cnpj}")
-    Call<CNPJ> getCNPJInfo(@Path("cnpj") String cnpj);
+    Call<CNPJ> getInfo(@Path("cnpj") String cnpj);
 }
