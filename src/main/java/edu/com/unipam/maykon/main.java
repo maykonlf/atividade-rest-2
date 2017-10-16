@@ -2,45 +2,32 @@ package edu.com.unipam.maykon;
 
 import edu.com.unipam.maykon.entidades.CEP;
 import edu.com.unipam.maykon.entidades.CNPJ;
-import edu.com.unipam.maykon.services.EnumServices;
-import edu.com.unipam.maykon.services.ReceitaWSService;
+import edu.com.unipam.maykon.services.Service;
 import edu.com.unipam.maykon.services.ServiceFactory;
-import edu.com.unipam.maykon.services.ViaCepService;
-import retrofit2.Call;
-import retrofit2.Retrofit;
+import edu.com.unipam.maykon.services.ViaCEP;
 
-import java.io.IOException;
+import static edu.com.unipam.maykon.services.EnumServices.RECEITA_WS;
+import static edu.com.unipam.maykon.services.EnumServices.VIA_CEP;
 
 public class main {
     public static void main(String[] args) {
-        Retrofit retrofitViaCEP = ServiceFactory.CreateService(EnumServices.VIA_CEP);
+        Service viaCep = ServiceFactory.createService(VIA_CEP);
+        Service receitaWS = ServiceFactory.createService(RECEITA_WS);
 
-        ViaCepService viaCepService = retrofitViaCEP.create(ViaCepService.class);
-        Call<CEP> cepCall = viaCepService.getInfo("38700001");
-        try {
-            CEP cepInfo = cepCall.execute().body();
-            System.out.println("cep:" + cepInfo.getCep());
-            System.out.println("uf:" + cepInfo.getUf());
-            System.out.println("localidade:" + cepInfo.getLocalidade());
-            System.out.println("bairro:" + cepInfo.getBairro());
-            System.out.println("complemento:" + cepInfo.getComplemento());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CEP cepInfo = (CEP) viaCep.getInfo("38750000");
 
-        Retrofit retrofitReceitaWS = ServiceFactory.CreateService(EnumServices.RECEITA_WS);
+        System.out.println("cep:" + cepInfo.getCep());
+        System.out.println("uf:" + cepInfo.getUf());
+        System.out.println("localidade:" + cepInfo.getLocalidade());
+        System.out.println("bairro:" + cepInfo.getBairro());
+        System.out.println("complemento:" + cepInfo.getComplemento());
 
-        ReceitaWSService receitaWSService = retrofitReceitaWS.create(ReceitaWSService.class);
-        Call<CNPJ> cnpjCall = receitaWSService.getInfo("23086962000100");
 
-        try {
-            CNPJ cnpj = cnpjCall.execute().body();
-            System.out.println("cnpj:" + cnpj.getCnpj());
-            System.out.println("fantasia:" + cnpj.getFantasia());
-            System.out.println("nome:" + cnpj.getNome());
-            System.out.println("natureza juridica:" + cnpj.getNaturezaJuridica());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CNPJ cnpj = (CNPJ) receitaWS.getInfo("23086962000100");
+
+        System.out.println("cnpj:" + cnpj.getCnpj());
+        System.out.println("fantasia:" + cnpj.getFantasia());
+        System.out.println("nome:" + cnpj.getNome());
+        System.out.println("natureza juridica:" + cnpj.getNaturezaJuridica());
     }
 }

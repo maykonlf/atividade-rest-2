@@ -1,21 +1,12 @@
 package edu.com.unipam.maykon.services;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class ServiceFactory {
-    public static Retrofit CreateService(EnumServices serviceType) {
+    public static Service createService(EnumServices serviceType) {
         switch (serviceType) {
             case RECEITA_WS:
-                return new Retrofit.Builder()
-                        .baseUrl("https://www.receitaws.com.br")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                return ReceitaWS.getInstance();
             case VIA_CEP:
-                return new Retrofit.Builder()
-                        .baseUrl("https://viacep.com.br/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                return ViaCEP.getInstance();
             default:
                 return null;
         }
